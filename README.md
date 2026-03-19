@@ -2,52 +2,59 @@
 
 ## Masala 1
 
-Siz foydalanuvchilarni boshqaruvchi tizim yaratyapsiz.
+Foydalanuvchilarni boshqaruvchi tizim yozing.
 
-`User` nomli class yarating.
+`User` class yarating.
 
 **Talablar:**
 
-* Atributlar:
-
-  * `name` (string)
-  * `email` (string, unique bo‘lishi kerak)
-* Class attribute:
-
-  * `users` — barcha yaratilgan obyektlar ro‘yxati
+* `name` (string)
+* `email` (string, unique bo‘lishi shart)
+* class attribute: `users = []`
 
 **Metodlar:**
 
-* `__init__()`:
+* `__init__(name, email)`
 
-  * yangi user yaratilganda uni `users` ro‘yxatiga qo‘shsin
-  * agar email takror bo‘lsa, obyekt yaratilmasin
+  * agar email oldin mavjud bo‘lsa → `ValueError`
+  * aks holda obyekt `users` ga qo‘shilsin
 * `get_info()` → `"Name: Ali, Email: ali@mail.com"`
-* `@classmethod find_user(email)` → userni qaytarsin
-* `delete_user(email)` → users ro‘yxatidan o‘chirsin
+* `@classmethod find_user(email)` → user obyektini qaytarsin yoki `None`
+* `delete_user(email)` → users dan o‘chirsin (topilmasa xato)
+
+**Vazifa:**
+
+* kamida 5 ta user yarating
+* bitta userni toping
+* bitta userni o‘chiring
 
 ---
 
 ## Masala 2
 
-`Product` class orqali kichik ombor tizimi yarating.
+Ombor (inventory) tizimi yozing.
+
+`Product` class:
 
 **Atributlar:**
 
 * `name`
-* `price` (>0 bo‘lishi kerak)
+* `price` (>0)
 * `quantity` (>=0)
 
 **Metodlar:**
 
-* `total_price()` → umumiy qiymat
-* `apply_discount(percent)` → narxni kamaytiradi
-* `sell(amount)` → quantity kamayadi (yetarli bo‘lmasa xato)
+* `total_price()` → price * quantity
+* `sell(amount)`
+
+  * agar amount > quantity → `ValueError`
+  * aks holda quantity kamayadi
+* `restock(amount)` → quantity oshadi
 
 **Vazifa:**
 
-* 5 ta product yarating
-* umumiy qiymati eng katta mahsulotni toping
+* 4 ta mahsulot yarating
+* eng katta total_price ga ega mahsulotni toping
 
 ---
 
@@ -64,58 +71,16 @@ Bank tizimi yozing.
 
 **Metodlar:**
 
-* `deposit(amount)` (amount > 0)
-* `withdraw(amount)` (balance yetarli bo‘lsa)
+* `deposit(amount)` → amount > 0 bo‘lsin
+* `withdraw(amount)` → balans yetarli bo‘lmasa `ValueError`
 * `transfer(other_account, amount)`
 * `get_balance()`
 
-**Qo‘shimcha:**
-
-* noto‘g‘ri operatsiyada xatolik chiqsin
-
----
-
-## Masala 4
-
-`Employee` class orqali kompaniya tizimi yarating.
-
-**Atributlar:**
-
-* `name`
-* `salary`
-* `department`
-
-**Metodlar:**
-
-* `increase_salary(percent)`
-* `compare_salary(other)`
-
 **Vazifa:**
 
-* 6 ta employee yarating
-* har bir department bo‘yicha eng katta salaryni toping
-
----
-
-## Masala 5
-
-Kutubxona tizimi yozing.
-
-`Library` class:
-
-**Atribut:**
-
-* `books = {nom: soni}`
-
-**Metodlar:**
-
-* `add_book(name, count)`
-* `borrow_book(name)` (agar mavjud bo‘lsa kamaytiradi)
-* `return_book(name)` (oshiradi)
-
-**Vazifa:**
-
-* eng ko‘p olingan kitobni aniqlang
+* 2 ta account yarating
+* pul o‘tkazing
+* noto‘g‘ri holatda xatolik chiqishini tekshiring
 
 ---
 
@@ -130,15 +95,15 @@ Kutubxona tizimi yozing.
 * `width`
 * `height`
 
+**Shartlar:**
+
+* width va height > 0 bo‘lsin (aks holda `ValueError`)
+
 **Metodlar:**
 
 * `area()`
 * `perimeter()`
-* `is_square()`
-
-**Qo‘shimcha:**
-
-* width yoki height manfiy bo‘lsa xatolik chiqsin
+* `is_square()` → True/False
 
 ---
 
@@ -148,13 +113,13 @@ Kutubxona tizimi yozing.
 
 **Atribut:**
 
-* `radius`
+* `radius` (>0)
 
 **Metodlar:**
 
 * `area()`
 * `circumference()`
-* `compare(other_circle)` → katta radiusni aniqlaydi
+* `compare(other_circle)` → katta radiusli obyektni qaytarsin
 
 ---
 
@@ -169,67 +134,40 @@ Kutubxona tizimi yozing.
 
 **Metodlar:**
 
+* `add_grade(x)` (0–100 bo‘lsin, aks holda xato)
 * `average()`
-* `max_grade()`
-* `is_passed()` (avg >= 60)
+* `is_passed()` → average >= 60
 
 ---
 
-## Masala 4
-
-`Car` class yozing.
-
-**Atributlar:**
-
-* `brand`
-* `speed` (>=0)
-
-**Metodlar:**
-
-* `accelerate(value)`
-* `brake(value)`
-* `is_speeding(limit)`
-
----
-
-## Masala 5
-
-`Book` class yozing.
-
-**Atributlar:**
-
-* `title`
-* `pages`
-* `read_pages`
-
-**Metodlar:**
-
-* `read(n)` → o‘qilgan sahifani oshiradi
-* `progress()` → foizda qaytaradi
-
----
-
-# 3. Object (obyekt) bilan ishlash
+# 3. Object bilan ishlash
 
 ## Masala 1
 
-`User` obyektlari ro‘yxatini yarating (kamida 5 ta).
+`Car` class yozing (`brand`, `speed`).
+
+**Shart:**
+
+* speed >= 0
 
 **Vazifa:**
 
-* eng uzun ismli userni toping
-* email bo‘yicha sort qiling
+* 5 ta obyekt yarating
+* eng tez mashinani toping (`max`)
+* o‘rtacha tezlikni hisoblang
 
 ---
 
 ## Masala 2
 
-`Car` obyektlari bilan ishlang.
+`Student` obyektlari bilan ishlang.
 
 **Vazifa:**
 
-* eng tez mashinani toping
-* o‘rtacha tezlikni hisoblang
+* 5 ta student yarating
+* har biriga turli grades bering
+* eng yuqori average toping
+* faqat passed studentlarni alohida listga ajrating
 
 ---
 
@@ -239,126 +177,329 @@ Kutubxona tizimi yozing.
 
 **Vazifa:**
 
-* total_price eng katta productni toping
-* narx bo‘yicha sort qiling
+* 5 ta product yarating
+* `total_price()` bo‘yicha sort qiling
+* eng katta qiymatli productni toping
 
 ---
 
-## Masala 4
-
-`Student` obyektlari bilan ishlang.
-
-**Vazifa:**
-
-* eng yuqori average toping
-* faqat passed talabalarni ajrating
-
----
-
-## Masala 5
-
-`BankAccount` obyektlari bilan ishlang.
-
-**Vazifa:**
-
-* eng katta balans
-* eng ko‘p pul o‘tkazgan user
-
----
-
-# 4. Attribute (murakkab ishlash)
+# 4. Attribute (nazorat bilan)
 
 ## Masala 1
 
-`Car` classda `speed` uchun setter yozing:
+`Car` class yozing.
 
-* speed manfiy bo‘lmasin
-* juda katta bo‘lsa (300 dan yuqori) xatolik
+**Atribut:**
+
+* `_speed` (protected)
+
+**Metodlar:**
+
+* `set_speed(value)`
+
+  * 0 ≤ value ≤ 300
+  * aks holda `ValueError`
+* `get_speed()`
 
 ---
 
 ## Masala 2
 
-`Student` classda `grades`:
+`Product` class yozing.
 
-* faqat 0–100 oralig‘ida qo‘shilsin
-* noto‘g‘ri qiymat bo‘lsa xato
+**Atribut:**
+
+* `_price`
+
+**Metodlar:**
+
+* `set_price(value)` → value > 0
+* `get_price()`
 
 ---
 
 ## Masala 3
 
-`Product`:
+`User` class yozing.
 
-* `price` manfiy bo‘lmasin
-* setter orqali nazorat
+**Atribut:**
+
+* `email`
+
+**Shart:**
+
+* email ichida `"@"` bo‘lishi shart
+* aks holda `ValueError`
 
 ---
 
-## Masala 4
+# 5. Method (murakkab logika)
+
+## Masala 1
+
+`Calculator` class yozing.
+
+**Metodlar:**
+
+* `add(a, b)`
+* `subtract(a, b)`
+* `multiply(a, b)`
+* `divide(a, b)` → b = 0 bo‘lsa `ZeroDivisionError`
+
+---
+
+## Masala 2
+
+`TextProcessor` class yozing.
+
+**Atribut:**
+
+* `text`
+
+**Metodlar:**
+
+* `word_count()`
+* `unique_words()` → set
+* `most_common_word()` → eng ko‘p uchragan so‘z
+
+---
+
+## Masala 3
+
+`Game` class yozing.
+
+**Atributlar:**
+
+* `score`
+* `level`
+
+**Metodlar:**
+
+* `add_score(points)`
+* har 100 ball oshganda level +1 bo‘lsin
+
+---
+
+# 6. **init** (default va tekshiruv)
+
+## Masala 1
+
+`Student` class:
+
+**Atributlar:**
+
+* `name`
+* `grades=None`
+
+**Shart:**
+
+* agar None bo‘lsa → bo‘sh list yaratilsin
+
+---
+
+## Masala 2
+
+`Car` class:
+
+* `brand`
+* `speed=0` default
+
+---
+
+## Masala 3
+
+`Account` class:
+
+* `balance` (>0 bo‘lsin)
+* aks holda `ValueError`
+
+---
+
+# 7. Instance attribute
+
+## Masala 1
+
+`User` class:
+
+* har obyekt uchun avtomatik `id` (1,2,3…)
+
+---
+
+## Masala 2
+
+`Student`:
+
+* har bir obyekt o‘z `grades` listiga ega bo‘lsin
+* boshqa obyektga ta’sir qilmasin
+
+---
+
+## Masala 3
+
+`Account`:
+
+* har biri mustaqil balans bilan ishlasin
+
+---
+
+# 8. Class attribute
+
+## Masala 1
 
 `User`:
 
-* email formatini tekshiring (`@` bo‘lishi shart)
-
----
-
-## Masala 5
-
-`BankAccount`:
-
-* balansni tashqaridan o‘zgartirib bo‘lmasin
-
----
-
-# 5. Method (logik masalalar)
-
-## Masala 1
-
-`Calculator`:
-
-* add, subtract, multiply, divide
-* divide da 0 bo‘lsa exception
+* `users_count`
+* har yangi obyekt yaratilganda oshsin
 
 ---
 
 ## Masala 2
 
-`Math`:
+`Product`:
 
-* factorial(n)
-* fibonacci(n)
+* `global_discount`
+* `apply_discount()` da ishlatilsin
 
 ---
 
 ## Masala 3
 
-`TextProcessor`:
-
-* word_count()
-* unique_words()
-* most_common_word()
-
----
-
-## Masala 4
-
-`Shop`:
-
-* cart (list)
-* add_product(product)
-* remove_product(product)
-* total_price()
-
----
-
-## Masala 5
-
 `Game`:
 
-* score
-* add_score(points)
-* level_up() (har 100 ballda level oshsin)
+* `max_level` (class attribute)
+* level oshishi shu limitdan oshmasin
+
+---
+
+# 9. Instance vs Class attribute
+
+## Masala 1
+
+Classda:
+
+* `x = 10`
+
+Instance orqali:
+
+* `x = 20`
+
+Natijalarni solishtiring va tushuntiring
+
+---
+
+## Masala 2
+
+Class atributni o‘zgartiring:
+
+* barcha obyektga ta’sirini tekshiring
+
+---
+
+## Masala 3
+
+Classda list saqlang:
+
+* bir obyekt orqali o‘zgartirib, boshqalarga ta’sirini ko‘rsating
+
+---
+
+# 10. Encapsulation
+
+## Masala 1
+
+`BankAccount`:
+
+* `__balance`
+* tashqaridan o‘qib bo‘lmasin
+
+---
+
+## Masala 2
+
+`User`:
+
+* `__password`
+* `check_password(p)` metod yozing
+
+---
+
+## Masala 3
+
+Protected `_data` bilan class yozing va subclassda ishlating
+
+---
+
+# 11. Getter / Setter
+
+## Masala 1
+
+`Product`:
+
+* property orqali `price` boshqaring
+* price > 0
+
+---
+
+## Masala 2
+
+`Student`:
+
+* `grade` setter (0–100)
+
+---
+
+## Masala 3
+
+Read-only property (`id`) yarating
+
+---
+
+# 12. Inheritance
+
+## Masala 1
+
+`Animal` → `Dog`
+
+* `make_sound()` override
+
+---
+
+## Masala 2
+
+`Vehicle` → `Car`
+
+* `fuel_type` atribut qo‘shing
+* `info()` metod yozing
+
+---
+
+## Masala 3
+
+`User` → `Admin`
+
+* `delete_user()` qo‘shing
+
+---
+
+# 13. super()
+
+## Masala 1
+
+Parent `__init__` ni `super()` bilan chaqiring
+
+---
+
+## Masala 2
+
+Parent metodni override qilib ichida `super()` ishlating
+
+---
+
+## Masala 3
+
+3 darajali inheritance qilib:
+
+* har bosqichda `super()` ishlating
 
 ---
 
